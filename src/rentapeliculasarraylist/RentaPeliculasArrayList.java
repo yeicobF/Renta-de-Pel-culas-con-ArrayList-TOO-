@@ -40,7 +40,9 @@ class Usuario{
     public int registraID(){
         return ID++;
     }
-    public void ImprimeInfo(){
+    public void ImprimeInfo(){  
+        /*Este método imprime la información de los usuarios ya que no la podemos imprimir directamente del
+            arrayList. Se tiene que acceder al objeto y con este método la imprimimos.*/
         System.out.println(" - Nombre: " + Nombre + ", Edad: " + Edad);
         System.out.println(" - ID: " + ID + ", Telefono: " + Telefono);
         System.out.println(" - Direccion: " + Direccion);
@@ -48,8 +50,27 @@ class Usuario{
 }
 
 class UsuarioArrayList{
-    ArrayList<Usuario> userArray = new ArrayList<>();
+    private ArrayList<Usuario> userArray;
+    public UsuarioArrayList(){
+        userArray = new ArrayList<>();
+    }
+    public void addUsuario(Usuario user){
+        userArray.add(user);
+    }
+    public void imprimeAL(){
+        /*Aquí mediante un ciclo recorremos todos los elementos del arreglo y mediante el método
+            que definimos anteriormente para imprimir la info del usuario, lo utilizamos aquí ya
+            habiendo accedido al objeto.*/
+        for(Usuario user : userArray)//each loop feature of java: https://www.quora.com/How-do-I-display-all-the-elements-in-ArrayList-in-Java-using-loop
+            user.ImprimeInfo();//Usando el método imprimir la info de cada objeto
+        /*El ciclo también podría ser con un for normal y utilizando el método "size()" de la clase ArrayList.
+            Sólo que como es un objeto, no se puede imprimir directamente, pero si fueran elementos
+            individuales, sí se podría.1*/
+        //for(int i=0; i<userArray.size(); i++)
+          //  userArray.get(i);
+    }
     
+    //public
 }
 
 public class RentaPeliculasArrayList{
@@ -63,6 +84,7 @@ public class RentaPeliculasArrayList{
         //ArrayList<Usuario> user = new ArrayList<>();
 //        ArrayList<Usuario> userArray; //El compilador sugería que se hicieran esos procesos por separado
 //        userArray = new ArrayList<>();
+        UsuarioArrayList userArray = new UsuarioArrayList();
         Usuario userObj = new Usuario();
         String ID, Dir, Tel, Nombre;
         int op=1, Edad, i;//op = opción que se inicia en 1 para entrar al ciclo
@@ -73,25 +95,24 @@ public class RentaPeliculasArrayList{
             switch(op){
                 case 1: //Registrar usuario
                     //String usimgNew = new String("Hola"); Marca un warning
-                    System.out.println("\t-> Nombre: ");
+                    System.out.println("-> Nombre: ");
                     Nombre = input.nextLine();
-                    System.out.println("\t-> Edad: ");
+                    System.out.println("-> Edad: ");
                     Edad = input.nextInt();
                     /*ID = new String(input.nextLine());  //nextLine() es un método para leer String
                         Se dice que esto es ineficiente ya que no es "memory efficient"
                     Fuente: https://help.semmle.com/wiki/display/JAVA/Inefficient+String+constructor*/
                     //ID = input.nextLine(); El ID no se genera, se ingresa
                     //System.out.println(ID); Para ver si sí se imprimía bien
-                    System.out.println("\t-> Direccion: ");
+                    System.out.println("-> Direccion: ");
                     Dir = input.nextLine();
-                    System.out.println("\t-> Telefono: ");
+                    System.out.println("-> Telefono: ");
                     Tel = input.nextLine();
                     userObj.registraUsuario(Edad, Dir, Tel, Nombre);
-                    userArray.add(userObj);
+                    userArray.addUsuario(userObj);
                     break;
                 case 2: //Ver información del usuario
-                    for(Usuario u : userArray)
-                        System.out.println(u);
+                    userArray.imprimeAL();
                     break;
             }
         }
