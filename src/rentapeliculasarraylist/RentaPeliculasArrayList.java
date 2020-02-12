@@ -40,6 +40,11 @@ class Usuario{
     public int registraID(){
         return ID++;
     }
+    public void ImprimeInfo(){
+        System.out.println(" - Nombre: " + Nombre + ", Edad: " + Edad);
+        System.out.println(" - ID: " + ID + ", Telefono: " + Telefono);
+        System.out.println(" - Direccion: " + Direccion);
+    }
 }
 
 class UsuarioArrayList{
